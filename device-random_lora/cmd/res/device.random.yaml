@@ -1,0 +1,44 @@
+name: "LoRa Device"
+manufacturer: "KETI"
+model: "LoRa Device v1.0"
+labels:
+- "lora-device"
+description: "LoRa Device"
+
+deviceResources:
+-
+  name: "LoRa_Data"
+  description: "LoRa data sent from device"
+  properties:
+    value:
+      { type: "String", readWrite: "R", defaultValue: "0" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "0~100 random value" }
+
+-
+  name: "LoRa_Command"
+  description: "Command for LoRa device"
+  properties:
+    value:
+      {type: "String", readWrite: "R", defaultValue: "Command" }            
+
+deviceCommands:
+-
+  name: "SendCommand"
+  set:
+  - { operation: "set", deviceResource: "LoRa_Command", parameter: "[]" }
+
+coreCommands:
+-
+  name: "SendCommand"
+  put:
+    path: "/api/v1/device/{deviceId}/SendCommand"
+    parameterNames: ["LoRa_Command"]
+    responses:
+    -
+      code: "200"
+      description: ""
+    -
+      code: "503"
+      description: "service unavailable"
+
